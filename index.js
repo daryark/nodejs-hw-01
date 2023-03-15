@@ -12,7 +12,6 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-// TODO: рефакторить
 const invokeAction = async ({ action, id, name, email, phone }) => {
 	switch (action) {
 		case "list":
@@ -32,6 +31,8 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 
 		case "remove":
 			const removedContact = await contactsOperations.removeContact(id);
+			if (!removedContact) throw new Error(`There is no contact with id: ${id}`);
+
 			console.log(removedContact);
 			break;
 

@@ -20,9 +20,10 @@ async function removeContact(contactId) {
 	const idx = contacts.findIndex((item) => item.id === contactId);
 	if (!idx) return null;
 
-	const removeContact = contacts.splice(idx, 1); //splice removes the item and returns the item that was removed;
-	await fs.writeFile(contactsPath, JSON.stringify(contacts));
-	return removeContact;
+	const newContacts = contacts.filter((_, index) => idx !== index);
+	await fs.writeFile(contactsPath, JSON.stringify(newContacts));
+
+	return contacts[idx];
 }
 
 async function addContact(name, email, phone) {
